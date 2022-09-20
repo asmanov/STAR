@@ -132,7 +132,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Cruiser.cpp" />
+    <ClCompile Include="Fleet.cpp" />
+    <ClCompile Include="Leader.cpp" />
+    <ClCompile Include="Roket.cpp" />
+    <ClCompile Include="Ship.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Transport.cpp" />
+    <ClCompile Include="Weapon.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Cruiser.h" />
+    <ClInclude Include="Fleet.h" />
+    <ClInclude Include="Leader.h" />
+    <ClInclude Include="Roket.h" />
+    <ClInclude Include="Ship.h" />
+    <ClInclude Include="Transport.h" />
+    <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
