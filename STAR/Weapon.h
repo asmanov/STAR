@@ -3,7 +3,7 @@
 
 class Weapon
 {
-private:
+protected:
 	int power; //мощность оружия
 	int cost; //стоимость оружия
 	
