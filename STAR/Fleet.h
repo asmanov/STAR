@@ -1,27 +1,29 @@
 #pragma once
-#include <list>
+#include <vector>
 #include "Ship.h"
 #include "Leader.h"
 #include "Cruiser.h"
 #include "Transport.h"
 
-using std::list;
+using std::vector;
 
 
 
-class Fleet
+class Fleet : public Ship, Leader, Cruiser, Transport
 {
 private:
-	list<Ship> fleet;
+	
 	int budget;
 	int experience;
-
+public:
+	vector<Ship> fleets;
 public:
 	Fleet(int budgetP=30000, int experienceP=0): budget(budgetP), 
-		experience(experienceP), fleet{}
+		experience(experienceP), fleets{}
 	{
-		
+		fleets.reserve(1);
 	}
+	//покупка корабля
 	void buyShip(int n)
 	{
 		Ship* item = new Ship;
@@ -39,11 +41,35 @@ public:
 		default:
 			break;
 		}
-		if(budget>item->getCost())
+		if (budget > item->getCost())
 		{
-			fleet.push_back(*item);
+			fleets.push_back(*item);
 			budget -= item->getCost();
 		}
+		else std::cout << "You haven`t money.\n";
 	}
+	/*Ship getShip(int i)
+	{
+		return  0;
+	}*/
+
+	//Покупка ракет
+	void BuyRoket()
+	{
+	
+	}
+	int getBudget()
+	{
+		return budget;
+	}
+	int getExperience()
+	{
+		return experience;
+	}
+	void setExp(int exp)
+	{
+		experience += exp;
+	}
+	
 };
 

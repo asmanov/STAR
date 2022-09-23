@@ -13,12 +13,14 @@ protected:
 	int defense;//прочность корабля
 	int cost;//стоимость корабля
 	int lim_weapon;//ограничение по кол-ву оружия на борту;
-	sf::Texture texture;
+	
 public:
 	Ship(string nameP, int defenseP, int costP, int lim): name{nameP}, defense{defenseP}, 
 		cost{ costP }, lim_weapon{lim}, arsenal {}
 	{
 		texture.loadFromFile("sbot.png");
+		ship.setTexture(texture);
+		fire.setTexture(texture);
 	}
 	Ship():Ship("", 0, 0, 0)
 	{
@@ -67,5 +69,8 @@ public:
 	}
 public:
 	list <Roket> arsenal;//арсенал ракет
+	sf::Texture texture;
+	sf::Sprite ship;
+	sf::Sprite fire;
 };
 
