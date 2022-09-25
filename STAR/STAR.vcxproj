@@ -133,6 +133,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Cruiser.cpp" />
+    <ClCompile Include="Enemy1.cpp" />
+    <ClCompile Include="Enemy2.cpp" />
+    <ClCompile Include="Enemy3.cpp" />
     <ClCompile Include="Fleet.cpp" />
     <ClCompile Include="Leader.cpp" />
     <ClCompile Include="Roket.cpp" />
@@ -143,6 +146,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cruiser.h" />
+    <ClInclude Include="Enemy1.h" />
+    <ClInclude Include="Enemy2.h" />
+    <ClInclude Include="Enemy3.h" />
     <ClInclude Include="Fleet.h" />
     <ClInclude Include="Leader.h" />
     <ClInclude Include="Roket.h" />

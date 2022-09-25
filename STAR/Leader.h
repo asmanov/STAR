@@ -5,10 +5,6 @@ class Leader :
     public Ship
 {
 public:
-	/*sf::Sprite m_led;
-	sf::Sprite fire;*/
-
-public:
 	Leader() :Ship("Leader", 1000, 1000, 2)
 	{
 		ship.setTexture(texture);

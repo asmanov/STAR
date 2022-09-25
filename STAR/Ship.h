@@ -13,7 +13,12 @@ protected:
 	int defense;//прочность корабля
 	int cost;//стоимость корабля
 	int lim_weapon;//ограничение по кол-ву оружия на борту;
-	
+public:
+	list <Roket> arsenal;//арсенал ракет
+	sf::Texture texture;
+	sf::Sprite ship;
+	sf::Sprite fire;
+	sf::Vector2f position;
 public:
 	Ship(string nameP, int defenseP, int costP, int lim): name{nameP}, defense{defenseP}, 
 		cost{ costP }, lim_weapon{lim}, arsenal {}
@@ -21,10 +26,17 @@ public:
 		texture.loadFromFile("sbot.png");
 		ship.setTexture(texture);
 		fire.setTexture(texture);
+		ship.setPosition(1700.0f, 0.0f);
+		fire.setPosition(1700.0f, 0.0f);
 	}
 	Ship():Ship("", 0, 0, 0)
 	{
 
+	}
+	void setPos(float xP, float yP)
+	{
+		position.x = xP;
+		position.y = yP;
 	}
 	int getDefense()
 	{
@@ -67,10 +79,6 @@ public:
 	{
 		defense += change;
 	}
-public:
-	list <Roket> arsenal;//арсенал ракет
-	sf::Texture texture;
-	sf::Sprite ship;
-	sf::Sprite fire;
+
 };
 

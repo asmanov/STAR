@@ -4,7 +4,9 @@
 #include "Leader.h"
 #include "Cruiser.h"
 #include "Transport.h"
-
+#include "Enemy1.h"
+#include "Enemy2.h"
+#include "Enemy3.h"
 using std::vector;
 
 
@@ -38,8 +40,17 @@ public:
 		case 3:
 			item = new Transport;
 			break;
-		default:
+		case 4:
+			item = new Enemy1;
 			break;
+		case 5:
+			item = new Enemy2;
+			break;
+		case 6:
+			item = new Enemy3;
+			break;
+		/*default:
+			break;*/
 		}
 		if (budget > item->getCost())
 		{
