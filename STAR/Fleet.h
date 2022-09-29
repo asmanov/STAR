@@ -59,6 +59,9 @@ public:
 		}
 		else std::cout << "You haven`t money.\n";
 	}
+	/*int getSize() {
+		return 
+	}*/
 	/*Ship getShip(int i)
 	{
 		return  0;
