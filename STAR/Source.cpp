@@ -33,13 +33,13 @@ int main()
 			<< "Для начала игры\t\t\t\t\t\t ==нажмите 0\n";
 		std::cin >> n;
 		myFleet.buyShip(n);
-		
-	} while (n!=0);
+
+	} while (n != 0);
 	/*myFleet.buyShip(1);
 	myFleet.buyShip(2);
 	myFleet.buyShip(2);
 	myFleet.buyShip(3);*/
-	
+
 	//Weapon roket;
 	Enemy1 ship1;
 	Enemy2 ship2;
@@ -52,67 +52,68 @@ int main()
 	_getch();
 	//вывод окна игры
 	RenderWindow window(VideoMode(1600, 1000), "SFML Works!");
-
+	float x = 0;
+	float y = 0;
 	// Обрабатываем очередь событий в цикле
 	Event event;
+	Clock clock;
 	// Главный цикл приложения. Выполняется, пока открыто окно
 	while (window.isOpen())
 	{
-		
+		float time = clock.getElapsedTime().asMilliseconds();
+		clock.restart();
+		time = time / 1500;
 		while (window.pollEvent(event))
 		{
-			switch(event.type)
-			{
-				// Пользователь нажал на «крестик» и хочет закрыть окно?
-				case Event::Closed:
-					// тогда закрываем его
-					window.close();
-					break;
-				case Event::KeyPressed:
-					switch (event.key.code) {
-					case Keyboard::Right:
-						if ((f + 1) < myFleet.fleets.size())
-						{
-							f++;
-						}
-						f = 0;
-						break;
-					case Keyboard::D:
-					{
-						float x = myFleet.fleets[f].ship.getPosition().x + 50.0;
-						float y = myFleet.fleets[f].ship.getPosition().y;
-						myFleet.fleets[f].ship.setPosition(x, y);
-
-						break;
-					}
-					case Keyboard::A:
-
-						break;
-					case Keyboard::W:
-
-						break;
-					case Keyboard::S:
-
-						break;
-					case Keyboard::Enter:
-
-						break;
-					}
-			}
 			
+			if (event.type == Event::Closed)//событие нажатие крестика 
+			{
+				window.close();//закрываем окно
+			}
+		}
+		if (Keyboard::isKeyPressed(Keyboard::Right))
+		{
+			if (f != myFleet.fleets.size() - 1) {
+				f++;
+			}
+			else f = 0;
+		}
+		if (Keyboard::isKeyPressed(Keyboard::A))
+		{
+			myFleet.fleets[f].ship.move(-20.0*time, 0);
+			myFleet.fleets[f].fire.move(-20.0*time, 0);
+		}
+		if (Keyboard::isKeyPressed(Keyboard::D))
+		{
+			myFleet.fleets[f].ship.move(20.0*time, 0);
+			myFleet.fleets[f].fire.move(20.0*time, 0);
+		}
+		if (Keyboard::isKeyPressed(Keyboard::W))
+		{
+			myFleet.fleets[f].ship.move(0, -20.0 * time);
+			myFleet.fleets[f].fire.move(0, -20.0 * time);
+		}
+		if (Keyboard::isKeyPressed(Keyboard::S))
+		{
+			myFleet.fleets[f].ship.move(0, 20.0 * time);
+			myFleet.fleets[f].fire.move(0, 20.0 * time);
 		}
 
-		ship1.ship.move(0.0, 0.1);
-		ship1.fire.move(0.0, 0.1);
-		ship2.ship.move(0.0, 0.1);
-		ship2.fire.move(0.0, 0.1);
-		ship3.ship.move(0.0, 0.1);
-		ship3.fire.move(0.0, 0.1);
+
+
+		ship1.ship.move(0.0, 20.1 * time);
+		ship1.fire.move(0.0, 20.1 * time);
+		ship2.ship.move(0.0, 20.1 * time);
+		ship2.fire.move(0.0, 20.1 * time);
+		ship3.ship.move(0.0, 20.1 * time);
+		ship3.fire.move(0.0, 20.1 * time);
+		x = 0;
+		y = 0;
 		// Отрисовка окна	
 		window.clear();
 		window.draw(starspace);//отрисовка фона звездного неба
 		window.setMouseCursorVisible(1);//видимость указателя мыши
-		for(int i = 0; i< myFleet.fleets.size(); i++)
+		for (int i = 0; i < myFleet.fleets.size(); i++)
 		{
 			window.draw(myFleet.fleets[i].ship);
 			window.draw(myFleet.fleets[i].fire);
@@ -125,8 +126,8 @@ int main()
 		window.draw(ship3.ship);
 		window.draw(ship3.fire);
 		window.display();
-	}
 
+	}
 	
 	return 0;
 }
