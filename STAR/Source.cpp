@@ -14,16 +14,12 @@ using namespace sf;
 
 int main()
 {
+	srand(time(0));
 	setlocale(LC_ALL, "rus");
 	int f = 0;
-	Fleet myFleet;
-	/*std::cout << "Для начала игры приобретите космические корабли для своего флота\n"
-		<< "Командирский - стоимость: 1000, защита: 1000, вооруженность: 2 ракет\t == нажмите 1\n"
-		<< "Крейсер - стоимость: 2000, защита: 2000, вооруженность: 10 ракет\t == нажмите 2\n"
-		<< "Транспортный - стоимость: 1500, защита: 500, вооруженность: 30 ракет\t == нажмите 3\n"
-		<< "Для начала игры\t\t\t\t ==нажмите 0\n";*/
+	Fleet myFleet; //создаем флот игрока 
 	int n;
-	myFleet.buyShip(1);
+	myFleet.buyShip(1);//добавляе в флот обязательный командирский корабль
 	do
 	{
 		system("cls");
@@ -33,18 +29,14 @@ int main()
 			<< "Транспортный - стоимость: 1500, защита: 500, вооруженность: 30 ракет\t == нажмите 3\n"
 			<< "Для начала игры\t\t\t\t\t\t ==нажмите 0\n";
 		std::cin >> n;
-		myFleet.buyShip(n);
+		myFleet.buyShip(n); //покупка кораблей в свой флот
 
 	} while (n != 0);
-	/*myFleet.buyShip(1);
-	myFleet.buyShip(2);
-	myFleet.buyShip(2);
-	myFleet.buyShip(3);*/
+	Fleet EnemyFleet;
 
-	//Weapon roket;
-	Enemy1 ship1;
+	/*Enemy1 ship1;
 	Enemy2 ship2;
-	Enemy3 ship3;
+	Enemy3 ship3;*/
 	Texture space;
 	//загрузка картинки звезного неба
 	space.loadFromFile("space.png");
@@ -64,6 +56,15 @@ int main()
 	// Главный цикл приложения. Выполняется, пока открыто окно
 	while (window.isOpen())
 	{
+		if (EnemyFleet.fleets.empty())
+		{
+			int en = rand() % 5;
+			for (int i = 0; i < en; i++)
+			{
+				int s = 4 + rand() % 2;
+				EnemyFleet.buyShip(s);
+			}
+		}
 		float time = clock.getElapsedTime().asMilliseconds();
 		clock.restart();
 		time = time / 1500;
@@ -121,20 +122,28 @@ int main()
 			ar[i].roket.move(0.0, -40.1 * time);
 		}
 
-
-		ship1.ship.move(0.0, 20.1 * time);
+		for (int i = 0; i < EnemyFleet.fleets.size(); i++)
+		{
+			EnemyFleet.fleets[i].ship.move(0.0, 20.1 * time);
+			EnemyFleet.fleets[i].fire.move(0.0, 20.1 * time);
+		}
+		/*ship1.ship.move(0.0, 20.1 * time);
 		ship1.fire.move(0.0, 20.1 * time);
 		ship2.ship.move(0.0, 20.1 * time);
 		ship2.fire.move(0.0, 20.1 * time);
 		ship3.ship.move(0.0, 20.1 * time);
-		ship3.fire.move(0.0, 20.1 * time);
+		ship3.fire.move(0.0, 20.1 * time);*/
 		x = 0;
 		y = 0;
 		// Отрисовка окна	
 		window.clear();
 		window.draw(starspace);//отрисовка фона звездного неба
 		window.setMouseCursorVisible(1);//видимость указателя мыши
-		
+		for (int i = 0; i < EnemyFleet.fleets.size(); i++)
+		{
+			window.draw(EnemyFleet.fleets[i].ship);
+			window.draw(EnemyFleet.fleets[i].fire);
+		}
 		for (int i = 0; i < myFleet.fleets.size(); i++)
 		{
 			window.draw(myFleet.fleets[i].ship);
@@ -144,12 +153,12 @@ int main()
 		{
 			window.draw(ar[i].roket);
 		}
-		window.draw(ship1.ship);
+		/*window.draw(ship1.ship);
 		window.draw(ship1.fire);
 		window.draw(ship2.ship);
 		window.draw(ship2.fire);
 		window.draw(ship3.ship);
-		window.draw(ship3.fire);
+		window.draw(ship3.fire);*/
 		
 		
 		window.display();
