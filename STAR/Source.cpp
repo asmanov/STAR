@@ -9,6 +9,7 @@
 #include "Enemy1.h"
 #include "Enemy2.h"
 #include "Enemy3.h"
+#include <list>
 using namespace sf;
 
 int main()
@@ -57,6 +58,9 @@ int main()
 	// Обрабатываем очередь событий в цикле
 	Event event;
 	Clock clock;
+
+	vector <Roket> ar; //выпущенные ракеты
+
 	// Главный цикл приложения. Выполняется, пока открыто окно
 	while (window.isOpen())
 	{
@@ -105,7 +109,17 @@ int main()
 			myFleet.fleets[f].ship.move(0, 20.0 * time);
 			myFleet.fleets[f].fire.move(0, 20.0 * time);
 		}
-
+		if (Keyboard::isKeyPressed(Keyboard::F))
+		{
+			Roket roket;
+			roket.roket.setPosition(myFleet.fleets[f].ship.getPosition());
+			ar.push_back(roket);
+		}
+		
+		for (int i = 0; i < ar.size(); i++)
+		{
+			ar[i].roket.move(0.0, -40.1 * time);
+		}
 
 
 		ship1.ship.move(0.0, 20.1 * time);
@@ -120,20 +134,27 @@ int main()
 		window.clear();
 		window.draw(starspace);//отрисовка фона звездного неба
 		window.setMouseCursorVisible(1);//видимость указателя мыши
+		
 		for (int i = 0; i < myFleet.fleets.size(); i++)
 		{
 			window.draw(myFleet.fleets[i].ship);
 			window.draw(myFleet.fleets[i].fire);
 		}
-
+		for (int i = 0; i < ar.size(); i++)
+		{
+			window.draw(ar[i].roket);
+		}
 		window.draw(ship1.ship);
 		window.draw(ship1.fire);
 		window.draw(ship2.ship);
 		window.draw(ship2.fire);
 		window.draw(ship3.ship);
 		window.draw(ship3.fire);
+		
+		
 		window.display();
 
+		
 	}
 	
 	return 0;
