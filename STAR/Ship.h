@@ -14,14 +14,14 @@ protected:
 	int cost;//стоимость корабля
 	int lim_weapon;//ограничение по кол-ву оружия на борту;
 public:
-	list <Roket> arsenal;//арсенал ракет
+	int arsenal;//арсенал ракет
 	sf::Texture texture;
 	sf::Sprite ship;
 	sf::Sprite fire;
 	sf::Vector2f position;
 public:
 	Ship(string nameP, int defenseP, int costP, int lim): name{nameP}, defense{defenseP}, 
-		cost{ costP }, lim_weapon{lim}, arsenal {}
+		cost{ costP }, lim_weapon{lim}, arsenal {0}
 	{
 		texture.loadFromFile("sbot.png");
 		ship.setTexture(texture);
@@ -53,26 +53,25 @@ public:
 	//добавление ракеты в арсенал
 	void AddRoket()
 	{
-		if (arsenal.size() < lim_weapon)
+		if (arsenal < lim_weapon)
 		{
-			Roket item;
-			arsenal.push_back(item);
+			arsenal++;
 		}
 		else std::cout << "Arsenal is FULL!\n";
 	}
 	//извлечение ракеты из арсенала
 	void extractRoket()
 	{
-		if (!arsenal.empty())
+		if (arsenal>0)
 		{
-			arsenal.pop_back();
+			arsenal--;
 		}
 		else std::cout << "Arsenal is empty!\n";
 	}
 	//кол-во ракет в арсенале
 	int numberRoket()
 	{
-		return arsenal.size();
+		return arsenal;
 	}
 	//изменение защиты корабля
 	void changeDefense(int change)

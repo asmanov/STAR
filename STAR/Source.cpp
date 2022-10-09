@@ -78,6 +78,13 @@ int main()
 			}
 			else f = 0;
 		}
+		if (Keyboard::isKeyPressed(Keyboard::Left))
+		{
+			if (f != 0) {
+				f--;
+			}
+			else f = myFleet.fleets.size() - 1;
+		}
 		if (Keyboard::isKeyPressed(Keyboard::A))
 		{
 			myFleet.fleets[f].ship.move(-20.0*time, 0);
