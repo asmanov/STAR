@@ -34,9 +34,6 @@ int main()
 	} while (n != 0);
 	Fleet EnemyFleet;
 
-	/*Enemy1 ship1;
-	Enemy2 ship2;
-	Enemy3 ship3;*/
 	Texture space;
 	//загрузка картинки звезного неба
 	space.loadFromFile("space.png");
@@ -56,6 +53,7 @@ int main()
 	// Главный цикл приложения. Выполняется, пока открыто окно
 	while (window.isOpen())
 	{
+		//рандомное добавление кораблей во вражеский флот
 		if (EnemyFleet.fleets.empty())
 		{
 			int en = rand() % 5;
@@ -92,13 +90,13 @@ int main()
 		}
 		if (Keyboard::isKeyPressed(Keyboard::A))
 		{
-			myFleet.fleets[f].ship.move(-20.0*time, 0);
-			myFleet.fleets[f].fire.move(-20.0*time, 0);
+			myFleet.fleets[f].ship.move(-30.0*time, 0);
+			myFleet.fleets[f].fire.move(-30.0*time, 0);
 		}
 		if (Keyboard::isKeyPressed(Keyboard::D))
 		{
-			myFleet.fleets[f].ship.move(20.0*time, 0);
-			myFleet.fleets[f].fire.move(20.0*time, 0);
+			myFleet.fleets[f].ship.move(30.0*time, 0);
+			myFleet.fleets[f].fire.move(30.0*time, 0);
 		}
 		if (Keyboard::isKeyPressed(Keyboard::W))
 		{
@@ -113,13 +111,15 @@ int main()
 		if (Keyboard::isKeyPressed(Keyboard::F))
 		{
 			Roket roket;
-			roket.roket.setPosition(myFleet.fleets[f].ship.getPosition());
+			roket.roket.setPosition(myFleet.fleets[f].ship.getPosition().x,
+				myFleet.fleets[f].ship.getPosition().y+10);
 			ar.push_back(roket);
+			//std::cout << "shout :" << ar.size() << "\n";
 		}
 		
 		for (int i = 0; i < ar.size(); i++)
 		{
-			ar[i].roket.move(0.0, -40.1 * time);
+			ar[i].roket.move(0.0, -80.1 * time);
 		}
 
 		for (int i = 0; i < EnemyFleet.fleets.size(); i++)
@@ -127,40 +127,72 @@ int main()
 			EnemyFleet.fleets[i].ship.move(0.0, 20.1 * time);
 			EnemyFleet.fleets[i].fire.move(0.0, 20.1 * time);
 		}
-		/*ship1.ship.move(0.0, 20.1 * time);
-		ship1.fire.move(0.0, 20.1 * time);
-		ship2.ship.move(0.0, 20.1 * time);
-		ship2.fire.move(0.0, 20.1 * time);
-		ship3.ship.move(0.0, 20.1 * time);
-		ship3.fire.move(0.0, 20.1 * time);*/
+		//проверка попадания ракеты в корабль
+		for (int i = 0; i < EnemyFleet.fleets.size(); i++)
+		{
+			for (int k = 0; k < ar.size(); k++)
+			{
+				//std::cout << "shout :" << ar.size() << "\n";
+				Vector2f roket_position;
+				roket_position = ar[k].roket.getPosition();
+				Vector2f en_ship_position;
+				en_ship_position = EnemyFleet.fleets[i].ship.getPosition();
+				if (roket_position.x<= en_ship_position.x &&
+					roket_position.x > (en_ship_position.x-100) &&
+					roket_position.y <= en_ship_position.y &&
+					roket_position.y > (en_ship_position.y-5))
+				{
+					EnemyFleet.fleets[i].changeDefense(-(ar[k].getPower()));
+					ar.erase(ar.begin()+k);
+					std::cout << "Enemy shep defence: " << i << "\t" << EnemyFleet.fleets[i].getDefense() << "\n";
+					
+					
+					std::cout << roket_position.x << "\t\t" << en_ship_position.x << "\n";
+					std::cout << roket_position.y << "\t\t" << en_ship_position.y << "\n";
+
+				}
+				
+			}
+			if (EnemyFleet.fleets[i].getDefense() <= 0)
+			{
+				EnemyFleet.fleets.erase(EnemyFleet.fleets.begin() + i);
+			}
+		}
+
+
 		x = 0;
 		y = 0;
 		// Отрисовка окна	
 		window.clear();
 		window.draw(starspace);//отрисовка фона звездного неба
 		window.setMouseCursorVisible(1);//видимость указателя мыши
-		for (int i = 0; i < EnemyFleet.fleets.size(); i++)
+		if (!(EnemyFleet.fleets.empty()))
 		{
-			window.draw(EnemyFleet.fleets[i].ship);
-			window.draw(EnemyFleet.fleets[i].fire);
+			for (int i = 0; i < EnemyFleet.fleets.size(); i++)
+			{
+
+
+				window.draw(EnemyFleet.fleets[i].ship);
+				window.draw(EnemyFleet.fleets[i].fire);
+
+			}
 		}
-		for (int i = 0; i < myFleet.fleets.size(); i++)
+		if (!myFleet.fleets.empty())
 		{
-			window.draw(myFleet.fleets[i].ship);
-			window.draw(myFleet.fleets[i].fire);
+			for (int i = 0; i < myFleet.fleets.size(); i++)
+			{
+				window.draw(myFleet.fleets[i].ship);
+				window.draw(myFleet.fleets[i].fire);
+			}
 		}
-		for (int i = 0; i < ar.size(); i++)
+		if(!(ar.empty()))
 		{
-			window.draw(ar[i].roket);
+			for (int i = 0; i < ar.size(); i++)
+			{
+				window.draw(ar[i].roket);
+			}
 		}
-		/*window.draw(ship1.ship);
-		window.draw(ship1.fire);
-		window.draw(ship2.ship);
-		window.draw(ship2.fire);
-		window.draw(ship3.ship);
-		window.draw(ship3.fire);*/
-		
-		
+				
 		window.display();
 
 		
